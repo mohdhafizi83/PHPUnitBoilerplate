@@ -1,0 +1,15 @@
+<phpunit bootstrap="bootstrap.php">
+    <testsuites>
+        <testsuite name="My Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
+        <junit outputFile="tests/logs/junit.xml"/>
+        <testdoxHtml outputFile="tests/logs/testdox.html"/>
+    </logging>
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="display_errors" value="1"/>
+    </php>
+</phpunit>

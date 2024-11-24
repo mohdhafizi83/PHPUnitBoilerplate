@@ -1,0 +1,19 @@
+{
+  "name": "vendor/sample",
+  "description": "A description of your sample",
+  "type": "library",
+  "version": "0.0.1",
+  "require-dev": {
+    "phpunit/phpunit": "^11.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "": "tests/"
+    }
+  }
+}
