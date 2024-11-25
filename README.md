@@ -1,6 +1,6 @@
 # PHPUnit Boilerplate
 
-This is a pre-written template for PHPUnit with an example. Your script should be located in the src folder, while your test script should be in the tests folder. You do not need to modify anything in bootstrap.php; it is a script designed to log errors and deprecations in the tests/logs/error_logs.txt file. This setup has been tested for PHP 8.3.*, PHPUnit 11.4.*, and above.
+This is a pre-written template for PHPUnit with an example. Your script should be located in the src folder, while your test script should be in the tests folder. You do not need to modify anything in bootstrap.php; it is a script designed to log errors and deprecations in the tests/logs/error_logs.txt file. This setup has been tested for PHP 8.3.9, PHPUnit 11.4.3, and above.
 
 ## Windows Users
 
