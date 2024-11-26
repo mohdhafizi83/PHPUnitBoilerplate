@@ -35,6 +35,12 @@ Run the following command to execute your test script:
 phpunit --configuration ../../phpunit.xml --testdox
 ```
 
+To get a detailed view of any errors or warnings during your PHPUnit tests, use the following command:
+
+```sh
+phpunit --debug --configuration ../../phpunit.xml --testdox
+```
+
 ### Output
 ```
 SampleTest
