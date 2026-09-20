@@ -1,0 +1,7 @@
+/vendor/
+/.phpunit.cache/
+/tests/logs/*
+!/tests/logs/.gitkeep
+/coverage/
+composer.phar
+.env
