@@ -121,7 +121,15 @@ Relax these in `phpunit.xml` if your project needs it.
 |---|---|
 | `test` | `composer testdox` on PHP 8.4, 8.5 |
 | `phpstan` | `composer stan` (level max) on PHP 8.5 |
-| `coverage` | `composer test:coverage` with Xdebug, generates `coverage.svg` badge |
+| `coverage` | `composer test:coverage` with Xdebug, enforces threshold, generates `coverage.svg` badge |
+
+**Composer caching** — all jobs use `ramsey/composer-install@v3` which caches
+`vendor/` keyed on your `composer.lock` hash. Dependency installs are skipped
+entirely when the lock file hasn't changed, cutting CI time significantly.
+
+**Coverage threshold** — the coverage job fails the build if line coverage drops
+below `MIN_COVERAGE` (default **90%**, set as an env var at the top of the
+coverage job). Change it in `.github/workflows/ci.yml` to suit your project.
 
 The coverage badge is published to the `gh-pages` branch and displayed at the top
 of this README via `raw.githubusercontent.com/.../gh-pages/coverage.svg`.

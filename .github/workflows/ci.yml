@@ -22,8 +22,11 @@ jobs:
           php-version: ${{ matrix.php-version }}
           coverage: none
 
-      - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
+      - name: Install dependencies (cached)
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-cache: 'yes'
+          cache-key: composer-php${{ matrix.php-version }}
 
       - name: Run tests
         run: composer testdox
@@ -39,8 +42,11 @@ jobs:
           php-version: '8.5'
           coverage: none
 
-      - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
+      - name: Install dependencies (cached)
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-cache: 'yes'
+          cache-key: composer-php8.5
 
       - name: Run PHPStan (level max)
         run: composer stan
@@ -49,6 +55,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      MIN_COVERAGE: '90'
     steps:
       - uses: actions/checkout@v4
 
@@ -58,11 +66,20 @@ jobs:
           php-version: '8.5'
           coverage: xdebug
 
-      - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
+      - name: Install dependencies (cached)
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-cache: 'yes'
+          cache-key: composer-php8.5
 
       - name: Run tests with coverage (clover)
         run: composer test:coverage
+
+      - name: Enforce coverage threshold
+        uses: johanvanhelden/gha-clover-test-coverage-check@v1
+        with:
+          percentage: ${{ env.MIN_COVERAGE }}
+          filename: coverage/clover.xml
 
       - name: Generate coverage badge
         uses: timkrase/phpunit-coverage-badge@v1.2.1
