@@ -1,9 +1,13 @@
 # PHPUnit Boilerplate
 
-A clean, modern starting point for PHP projects with [PHPUnit](https://phpunit.de).
-Includes error/deprecation logging, coverage-ready configuration, and a GitHub Actions CI workflow.
+[![CI](https://github.com/mohdhafizi83/PHPUnitBoilerplate/actions/workflows/ci.yml/badge.svg)](https://github.com/mohdhafizi83/PHPUnitBoilerplate/actions/workflows/ci.yml)
+[![Coverage](https://raw.githubusercontent.com/mohdhafizi83/PHPUnitBoilerplate/gh-pages/coverage.svg)](coverage/clover.xml)
 
-Tested with PHP 8.3–8.5 and PHPUnit 13.
+A clean, modern starting point for PHP projects with [PHPUnit](https://phpunit.de).
+Includes error/deprecation logging, coverage-ready configuration, PHPStan static
+analysis (level max), and a GitHub Actions CI workflow.
+
+Tested with PHP 8.3–8.5, PHPUnit 13, and PHPStan 2.
 
 ## Project Structure
 
@@ -11,13 +15,16 @@ Tested with PHP 8.3–8.5 and PHPUnit 13.
 .
 ├── bootstrap.php            # Autoloader + error/fatal logging to tests/logs/error_log.txt
 ├── composer.json            # PSR-4 autoload: App\ -> src/, App\Tests\ -> tests/
-├── phpunit.xml              # PHPUnit config (strict mode, JUnit + TestDox HTML logs)
+├── phpstan.neon             # PHPStan config (level max, analyses src/ and tests/)
+├── phpunit.xml              # PHPUnit config (strict mode, clover coverage, JUnit + TestDox logs)
 ├── src/                     # Your source code (namespace App\)
 │   └── Sample.php
 ├── tests/Unit/              # Your tests (namespace App\Tests\)
 │   └── SampleTest.php
-└── tests/logs/              # Generated logs (gitignored)
-    └── error_log.txt
+├── tests/logs/              # Generated logs (gitignored)
+│   └── error_log.txt
+└── coverage/                # Generated coverage reports (gitignored)
+    └── clover.xml
 ```
 
 ## Quick Start
@@ -60,11 +67,24 @@ OK (2 tests, 5 assertions)
 
 ### Coverage (optional)
 
-Requires Xdebug or PCOV:
+Requires Xdebug (or PCOV). With Xdebug 3, the composer script sets
+`XDEBUG_MODE=coverage` automatically:
 
 ```sh
 composer test:coverage
 ```
+
+This prints a text summary and writes HTML + Clover reports into `coverage/`.
+
+### Static Analysis (PHPStan)
+
+```sh
+composer stan          # PHPStan level max on src/ and tests/
+composer check         # PHPStan + tests in one go
+```
+
+Config lives in `phpstan.neon`. Level `max` is the strictest; lower it to
+`level: 8` (or less) if your existing code needs a gentler start.
 
 ## Adapting This Boilerplate
 
@@ -94,12 +114,18 @@ Relax these in `phpunit.xml` if your project needs it.
 
 ## CI
 
-`.github/workflows/ci.yml` runs `composer testdox` on every push/PR against PHP 8.3, 8.4, and 8.5.
-Add the status badge to your README once the workflow is active:
+`.github/workflows/ci.yml` runs three jobs on every push/PR:
 
-```md
-![CI](https://github.com/mohdhafizi83/PHPUnitBoilerplate/actions/workflows/ci.yml/badge.svg)
-```
+| Job | What it does |
+|---|---|
+| `test` | `composer testdox` on PHP 8.3, 8.4, 8.5 |
+| `phpstan` | `composer stan` (level max) on PHP 8.5 |
+| `coverage` | `composer test:coverage` with Xdebug, generates `coverage.svg` badge |
+
+The coverage badge is published to the `gh-pages` branch and displayed at the top
+of this README via `raw.githubusercontent.com/.../gh-pages/coverage.svg`.
+It only updates on pushes to `main` (not on PRs), so the badge always reflects
+the latest merged code.
 
 ## License
 
