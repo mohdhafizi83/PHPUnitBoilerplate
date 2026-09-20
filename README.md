@@ -7,7 +7,8 @@ A clean, modern starting point for PHP projects with [PHPUnit](https://phpunit.d
 Includes error/deprecation logging, coverage-ready configuration, PHPStan static
 analysis (level max), and a GitHub Actions CI workflow.
 
-Tested with PHP 8.3–8.5, PHPUnit 13, and PHPStan 2.
+Tested with PHP 8.4–8.5, PHPUnit 13, and PHPStan 2.
+(PHP 8.3 is not supported because PHPUnit 13 requires PHP >= 8.4.1.)
 
 ## Project Structure
 
@@ -118,7 +119,7 @@ Relax these in `phpunit.xml` if your project needs it.
 
 | Job | What it does |
 |---|---|
-| `test` | `composer testdox` on PHP 8.3, 8.4, 8.5 |
+| `test` | `composer testdox` on PHP 8.4, 8.5 |
 | `phpstan` | `composer stan` (level max) on PHP 8.5 |
 | `coverage` | `composer test:coverage` with Xdebug, generates `coverage.svg` badge |
 
